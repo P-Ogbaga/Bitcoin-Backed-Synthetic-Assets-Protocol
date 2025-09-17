@@ -203,3 +203,58 @@
     last-claim: uint
   }
 )
+
+;; Governance proposals
+(define-map governance-proposals
+  { proposal-id: uint }
+  {
+    proposer: principal,
+    description: (string-utf8 256),
+    function-call: (buff 128),
+    votes-for: uint,
+    votes-against: uint,
+    start-block: uint,
+    end-block: uint,
+    executed: bool,
+    execution-block: uint
+  }
+)
+
+;; User proposal votes
+(define-map proposal-votes
+  { proposal-id: uint, voter: principal }
+  { 
+    vote: bool,
+    weight: uint
+  }
+)
+
+;; Collateral utilization tracking for interest rates
+(define-map asset-utilization
+  { asset-id: uint }
+  {
+    total-collateral: uint,
+    total-borrowed: uint,
+    base-rate: uint,
+    utilization-multiplier: uint,
+    last-rate-update: uint
+  }
+)
+
+;; Asset lock settings for time-locked assets
+(define-map asset-locks
+  { owner: principal, asset-id: uint }
+  {
+    locked-amount: uint,
+    unlock-height: uint
+  }
+)
+
+;; Oracle Access Control
+(define-map authorized-oracles
+  { address: principal }
+  { 
+    is-active: bool,
+    asset-types: (list 10 uint)
+  }
+)
